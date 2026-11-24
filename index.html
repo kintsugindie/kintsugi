@@ -1002,7 +1002,11 @@
 
     if (window.location.hash === "#atelier-studio") {
       setTimeout(openStudio, 200);
-    }
+      window.addEventListener("hashchange", () => {
+  if (window.location.hash === "#atelier-studio") {
+    openStudio();
+  }
+});
 
     function openStudio() {
       document.getElementById("studio-backdrop").classList.add("open");
