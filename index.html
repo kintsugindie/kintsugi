@@ -1,0 +1,1201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kintsugi Indie — Creative Atelier &amp; Solo Production</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --urushi-deep: #0b0a09;
+      --urushi-surface: #141210;
+      --urushi-card: #1a1714;
+      --washi-text: #f3ede2;
+      --washi-muted: #b6ab99;
+      --washi-dim: #7c7264;
+      --gold-leaf: #d4af37;
+      --gold-bright: #f2d57e;
+      --gold-deep: #9c791e;
+      --gold-border: rgba(212, 175, 55, 0.26);
+      --vermilion: #b83a2d;
+      --font-display: 'Cinzel', serif;
+      --font-serif: 'Cormorant Garamond', serif;
+      --font-sans: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      scroll-behavior: smooth;
+      background: var(--urushi-deep);
+      color: var(--washi-text);
+      font-family: var(--font-sans);
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+      background-color: var(--urushi-deep);
+      background-image:
+        radial-gradient(circle at 12% 18%, rgba(212, 175, 55, 0.06) 0%, transparent 45%),
+        radial-gradient(circle at 88% 72%, rgba(212, 175, 55, 0.05) 0%, transparent 50%),
+        repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.01) 0px, rgba(255, 255, 255, 0.01) 1px, transparent 1px, transparent 6px);
+      line-height: 1.65;
+    }
+
+    .kintsugi-bg-veins {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.34;
+    }
+
+    .gold-shimmer-text {
+      background: linear-gradient(120deg, var(--gold-deep) 0%, var(--gold-leaf) 35%, var(--gold-bright) 50%, var(--gold-leaf) 68%, var(--gold-deep) 100%);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: goldSweep 7s linear infinite;
+    }
+
+    @keyframes goldSweep {
+      0% { background-position: 0% center; }
+      100% { background-position: 200% center; }
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      background: rgba(11, 10, 9, 0.9);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--gold-border);
+    }
+
+    .nav-wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0.95rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      cursor: pointer;
+    }
+
+    .hanko-seal {
+      width: 36px;
+      height: 36px;
+      border: 1.5px solid var(--vermilion);
+      color: var(--vermilion);
+      font-family: var(--font-serif);
+      font-weight: 700;
+      font-size: 0.95rem;
+      display: grid;
+      place-items: center;
+      border-radius: 4px;
+      background: rgba(184, 58, 45, 0.08);
+      flex-shrink: 0;
+    }
+
+    .brand-titles { display: flex; flex-direction: column; }
+    .brand-name {
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      color: var(--washi-text);
+    }
+    .brand-sub {
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold-leaf);
+    }
+
+    nav.desktop-nav {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      flex-wrap: wrap;
+    }
+
+    .nav-btn {
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--washi-muted);
+      font-family: var(--font-sans);
+      font-size: 0.83rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      padding: 0.48rem 0.82rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    .nav-btn:hover {
+      color: var(--washi-text);
+      background: rgba(212, 175, 55, 0.07);
+    }
+
+    .nav-btn.active {
+      color: var(--gold-bright);
+      border-color: var(--gold-border);
+      background: linear-gradient(180deg, rgba(212, 175, 55, 0.14), rgba(212, 175, 55, 0.04));
+    }
+
+    .mobile-menu-toggle {
+      display: none;
+      background: var(--urushi-card);
+      border: 1px solid var(--gold-border);
+      color: var(--gold-bright);
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .mobile-drawer {
+      display: none;
+      flex-direction: column;
+      padding: 0.75rem 1.25rem 1.25rem;
+      border-top: 1px solid var(--gold-border);
+      background: var(--urushi-surface);
+      gap: 0.4rem;
+    }
+
+    .mobile-drawer.open { display: flex; }
+    .mobile-drawer .nav-btn { text-align: left; padding: 0.72rem 0.9rem; font-size: 0.95rem; }
+
+    @media (max-width: 900px) {
+      nav.desktop-nav { display: none; }
+      .mobile-menu-toggle { display: flex; }
+    }
+
+    main {
+      flex: 1;
+      width: 100%;
+      position: relative;
+      z-index: 10;
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 2.5rem 1.25rem 5rem;
+    }
+
+    .hero {
+      position: relative;
+      padding: 3.5rem 2rem;
+      border-radius: 16px;
+      background: linear-gradient(145deg, rgba(26, 23, 20, 0.94), rgba(15, 13, 12, 0.97));
+      border: 1px solid var(--gold-border);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.65), inset 0 1px 0 rgba(242, 213, 126, 0.16);
+      overflow: hidden;
+      margin-bottom: 3rem;
+    }
+
+    .hero-crack-svg {
+      position: absolute;
+      right: -20px;
+      top: -10px;
+      width: 340px;
+      height: 340px;
+      opacity: 0.55;
+      pointer-events: none;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      font-size: 0.76rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold-leaf);
+      margin-bottom: 1.1rem;
+    }
+
+    .hero-eyebrow::before {
+      content: "";
+      width: 24px;
+      height: 1px;
+      background: var(--gold-leaf);
+    }
+
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(1.9rem, 5vw, 3.35rem);
+      line-height: 1.16;
+      letter-spacing: 0.04em;
+      margin-bottom: 1.25rem;
+      max-width: 780px;
+    }
+
+    .hero p {
+      font-size: clamp(1rem, 2vw, 1.12rem);
+      color: var(--washi-muted);
+      max-width: 680px;
+      margin-bottom: 2rem;
+    }
+
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 0.85rem; }
+
+    .btn-gold {
+      background: linear-gradient(135deg, var(--gold-leaf), var(--gold-deep));
+      color: #0b0a09;
+      font-weight: 600;
+      font-size: 0.88rem;
+      letter-spacing: 0.05em;
+      padding: 0.78rem 1.45rem;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--washi-text);
+      font-weight: 500;
+      font-size: 0.88rem;
+      padding: 0.78rem 1.4rem;
+      border-radius: 8px;
+      border: 1px solid var(--gold-border);
+      cursor: pointer;
+    }
+
+    .section-head { margin-bottom: 2rem; }
+    .section-head h2 {
+      font-family: var(--font-display);
+      font-size: clamp(1.55rem, 3.2vw, 2.25rem);
+      letter-spacing: 0.06em;
+      color: var(--washi-text);
+      margin-bottom: 0.45rem;
+    }
+    .section-head p { color: var(--washi-muted); max-width: 660px; font-size: 0.98rem; }
+
+    .grid-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.35rem;
+    }
+
+    .card {
+      position: relative;
+      background: linear-gradient(160deg, var(--urushi-card), var(--urushi-surface));
+      border: 1px solid var(--gold-border);
+      border-radius: 14px;
+      padding: 1.55rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold-leaf), transparent);
+      opacity: 0.55;
+    }
+
+    .card-badge {
+      display: inline-block;
+      width: fit-content;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--gold-bright);
+      background: rgba(212, 175, 55, 0.1);
+      border: 1px solid rgba(212, 175, 55, 0.28);
+      padding: 0.22rem 0.62rem;
+      border-radius: 999px;
+      margin-bottom: 0.9rem;
+    }
+
+    .card h3 {
+      font-family: var(--font-serif);
+      font-size: 1.48rem;
+      font-weight: 600;
+      color: var(--washi-text);
+      margin-bottom: 0.55rem;
+      line-height: 1.25;
+    }
+
+    .card p { color: var(--washi-muted); font-size: 0.92rem; margin-bottom: 1.25rem; }
+
+    .card-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      padding-top: 0.95rem;
+      border-top: 1px solid rgba(212, 175, 55, 0.12);
+      font-size: 0.8rem;
+      color: var(--washi-dim);
+    }
+
+    .card-link {
+      color: var(--gold-bright);
+      text-decoration: none;
+      font-weight: 500;
+      cursor: pointer;
+      background: none;
+      border: none;
+      font-family: inherit;
+      font-size: 0.84rem;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1.35fr 0.85fr;
+      gap: 1.75rem;
+    }
+
+    @media (max-width: 820px) {
+      .about-grid { grid-template-columns: 1fr; }
+      .hero { padding: 2.3rem 1.35rem; }
+    }
+
+    .bio-box {
+      background: var(--urushi-card);
+      border: 1px solid var(--gold-border);
+      border-radius: 14px;
+      padding: 2rem;
+    }
+
+    .bio-box p { color: var(--washi-muted); margin-bottom: 1.15rem; font-size: 1rem; }
+
+    .fact-list { list-style: none; display: flex; flex-direction: column; gap: 0.95rem; }
+    .fact-list li { padding-bottom: 0.85rem; border-bottom: 1px solid rgba(212, 175, 55, 0.12); }
+    .fact-label {
+      display: block;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--gold-leaf);
+      margin-bottom: 0.2rem;
+    }
+    .fact-value { font-size: 0.95rem; color: var(--washi-text); }
+
+    .track-list { display: flex; flex-direction: column; gap: 0.9rem; }
+    .track-item {
+      background: var(--urushi-card);
+      border: 1px solid var(--gold-border);
+      border-radius: 12px;
+      padding: 1.15rem 1.4rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .track-info h4 { font-family: var(--font-serif); font-size: 1.3rem; color: var(--washi-text); }
+    .track-info span { font-size: 0.82rem; color: var(--washi-muted); }
+
+    .policy-box {
+      background: var(--urushi-card);
+      border: 1px solid var(--gold-border);
+      border-radius: 14px;
+      padding: 2rem;
+      max-width: 860px;
+    }
+    .policy-box h3 { font-family: var(--font-serif); font-size: 1.35rem; color: var(--gold-bright); margin: 1.4rem 0 0.45rem; }
+    .policy-box h3:first-child { margin-top: 0; }
+    .policy-box p { color: var(--washi-muted); font-size: 0.94rem; white-space: pre-line; }
+
+    footer {
+      position: relative;
+      z-index: 10;
+      border-top: 1px solid var(--gold-border);
+      background: rgba(11, 10, 9, 0.94);
+      padding: 2.2rem 1.25rem;
+      text-align: center;
+      color: var(--washi-dim);
+      font-size: 0.84rem;
+    }
+
+    .footer-sig {
+      font-family: var(--font-display);
+      letter-spacing: 0.16em;
+      color: var(--washi-muted);
+      margin-bottom: 0.45rem;
+      user-select: none;
+      cursor: default;
+    }
+
+    /* Hidden Admin Modal */
+    .studio-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      background: rgba(5, 5, 4, 0.88);
+      backdrop-filter: blur(10px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+    .studio-backdrop.open { display: flex; }
+
+    .studio-modal {
+      width: 100%;
+      max-width: 820px;
+      max-height: 90vh;
+      overflow-y: auto;
+      background: var(--urushi-surface);
+      border: 1px solid var(--gold-leaf);
+      border-radius: 16px;
+      padding: 1.75rem;
+    }
+
+    .studio-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--gold-border);
+      margin-bottom: 1.25rem;
+    }
+
+    .studio-field { margin-bottom: 1rem; }
+    .studio-field label {
+      display: block;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--gold-leaf);
+      margin-bottom: 0.35rem;
+    }
+    .studio-field input, .studio-field textarea {
+      width: 100%;
+      background: var(--urushi-deep);
+      border: 1px solid var(--gold-border);
+      color: var(--washi-text);
+      border-radius: 8px;
+      padding: 0.65rem 0.85rem;
+      font-family: var(--font-sans);
+      font-size: 0.9rem;
+    }
+    .studio-field textarea { min-height: 105px; resize: vertical; }
+
+    .studio-subtabs { display: flex; gap: 0.45rem; flex-wrap: wrap; margin-bottom: 1.25rem; }
+    .studio-pill {
+      background: var(--urushi-card);
+      border: 1px solid var(--gold-border);
+      color: var(--washi-muted);
+      padding: 0.42rem 0.8rem;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      cursor: pointer;
+    }
+    .studio-pill.active { background: var(--gold-leaf); color: #0b0a09; font-weight: 600; }
+
+    .studio-item-card {
+      background: var(--urushi-card);
+      border: 1px solid rgba(212, 175, 55, 0.18);
+      border-radius: 10px;
+      padding: 1rem;
+      margin-bottom: 0.85rem;
+    }
+    .studio-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+    @media (max-width: 640px) { .studio-row { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+  <svg class="kintsugi-bg-veins" viewBox="0 0 1440 900" fill="none" preserveAspectRatio="none">
+    <defs>
+      <linearGradient id="goldVeinGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#9c791e" stop-opacity="0.2" />
+        <stop offset="45%" stop-color="#f2d57e" stop-opacity="0.85" />
+        <stop offset="100%" stop-color="#d4af37" stop-opacity="0.15" />
+      </linearGradient>
+    </defs>
+    <path d="M-20 140 L210 230 L340 190 L520 340 L790 310 L1040 490 L1460 440" stroke="url(#goldVeinGrad)" stroke-width="1.4" />
+    <path d="M340 190 L410 70 L560 -10" stroke="url(#goldVeinGrad)" stroke-width="1" />
+    <path d="M790 310 L860 560 L740 780 L810 920" stroke="url(#goldVeinGrad)" stroke-width="1.2" />
+    <path d="M1040 490 L1210 350 L1450 280" stroke="url(#goldVeinGrad)" stroke-width="0.9" />
+  </svg>
+
+  <header>
+    <div class="nav-wrap">
+      <div class="brand" onclick="switchTab('home')">
+        <div class="hanko-seal">金継</div>
+        <div class="brand-titles">
+          <span class="brand-name" id="ui-brand-name">KINTSUGI INDIE</span>
+          <span class="brand-sub" id="ui-brand-sub">Creative Atelier &amp; Solo Production</span>
+        </div>
+      </div>
+
+      <nav class="desktop-nav" id="desktop-nav">
+        <button class="nav-btn active" onclick="switchTab('home')">Home</button>
+        <button class="nav-btn" onclick="switchTab('about')">About</button>
+        <button class="nav-btn" onclick="switchTab('apps')">Apps</button>
+        <button class="nav-btn" onclick="switchTab('games')">Games</button>
+        <button class="nav-btn" onclick="switchTab('music')">Music</button>
+        <button class="nav-btn" onclick="switchTab('digital')">Digital Products</button>
+        <button class="nav-btn" onclick="switchTab('privacy')">Privacy Policy</button>
+      </nav>
+
+      <button class="mobile-menu-toggle" id="mobile-toggle" aria-label="Toggle Menu" onclick="toggleMobileMenu()">☰</button>
+    </div>
+    <div class="mobile-drawer" id="mobile-drawer"></div>
+  </header>
+
+  <main id="app-main">
+    <section>
+      <div class="hero">
+        <svg class="hero-crack-svg" viewBox="0 0 300 300" fill="none">
+          <path d="M290 10 L215 85 L235 135 L155 195 L170 255 L95 295" stroke="#d4af37" stroke-width="2" stroke-opacity="0.75"/>
+          <path d="M215 85 L145 65 L90 15" stroke="#f2d57e" stroke-width="1.3" stroke-opacity="0.6"/>
+          <path d="M155 195 L80 185 L25 225" stroke="#d4af37" stroke-width="1.2" stroke-opacity="0.5"/>
+        </svg>
+        <div class="hero-eyebrow">Independent Multidisciplinary Lab • Est. Gaziantep</div>
+        <h1><span class="gold-shimmer-text">Crafting Digital Worlds, Soundscapes &amp; Tactile Objects with Golden Seams.</span></h1>
+        <p>Welcome to Kintsugi Indie — the independent solo production house of Semih Tekin. Bridging mobile applications, atmospheric indie games, electronic music, stock visual media, and 3D sculptural design under one cohesive craft.</p>
+        <div class="hero-actions">
+          <button class="btn-gold" onclick="switchTab('apps')">Explore Apps &amp; Games</button>
+          <button class="btn-outline" onclick="switchTab('music')">Listen to KİNTSUGİ</button>
+          <button class="btn-outline" onclick="switchTab('about')">About Semih Tekin</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-sig" id="secret-trigger">KİNTSUGİ • GAZİANTEP</div>
+    <div id="ui-footer-copy">© 2026 Kintsugi Indie — Solo Creative Atelier by Semih Tekin. All rights reserved.</div>
+  </footer>
+
+  <div class="studio-backdrop" id="studio-backdrop">
+    <div class="studio-modal">
+      <div class="studio-header">
+        <div>
+          <strong style="font-family: var(--font-display); color: var(--gold-bright); letter-spacing: 0.1em;">ATELIER STUDIO</strong>
+          <div style="font-size: 0.78rem; color: var(--washi-muted);">Owner Content &amp; Navigation Manager</div>
+        </div>
+        <button class="btn-outline" style="padding: 0.4rem 0.85rem;" onclick="closeStudio()">Close</button>
+      </div>
+      <div id="studio-body"></div>
+    </div>
+  </div>
+
+  <script id="site-config-script">
+    const DEFAULT_CONFIG = {
+      passcode: "kintsugi27",
+      brand: {
+        name: "KINTSUGI INDIE",
+        subtitle: "Creative Atelier & Solo Production",
+        heroEyebrow: "Independent Multidisciplinary Lab • Est. Gaziantep",
+        heroHeadline: "Crafting Digital Worlds, Soundscapes & Tactile Objects with Golden Seams.",
+        heroDescription: "Welcome to Kintsugi Indie — the independent solo production house of Semih Tekin. Bridging mobile applications, atmospheric indie games, electronic music, stock visual media, and 3D sculptural design under one cohesive craft.",
+        footerNote: "© 2026 Kintsugi Indie — Solo Creative Atelier by Semih Tekin. All rights reserved."
+      },
+      tabs: [
+        { id: "home", label: "Home", visible: true },
+        { id: "about", label: "About", visible: true },
+        { id: "apps", label: "Apps", visible: true },
+        { id: "games", label: "Games", visible: true },
+        { id: "music", label: "Music", visible: true },
+        { id: "digital", label: "Digital Products", visible: true },
+        { id: "privacy", label: "Privacy Policy", visible: true }
+      ],
+      about: {
+        heading: "About the Creator",
+        subheading: "The philosophy, background, and multidisciplinary craft behind Kintsugi Indie.",
+        paragraphs: [
+          "I am Semih Tekin, a 28-year-old independent creator born and based in Gaziantep, Turkey, operating under the artist and developer alias KİNTSUGİ. A graduate of Akdeniz University in Recreation Management, I have dedicated my creative life to the online digital ecosystem — blending structured human-centered experience design with self-taught software, audio, and visual production.",
+          "Inspired by the Japanese art of Kintsugi, which repairs broken ceramics with lacquer dusted in powdered gold, my solo atelier embraces iterative experimentation. Rather than hiding rough edges behind corporate polish, every app, game, musical composition, photograph, and 3D model is built with transparent craftsmanship and soul.",
+          "From publishing Android applications and arcade games on Google Play to releasing electronic and ethnic-fusion albums on global streaming platforms, licensing curated stock photography, and sculpting concrete bonsai vessels from custom 3D models, Kintsugi Indie serves as a unified home for independent digital creation."
+        ],
+        facts: [
+          { label: "Founder & Solo Creator", value: "Semih Tekin (KİNTSUGİ)" },
+          { label: "Origin & Base", value: "Gaziantep, Türkiye (Age 28)" },
+          { label: "Academic Background", value: "Akdeniz University — Recreation Management" },
+          { label: "Disciplines", value: "Android Apps, Indie Games, Music Production, 3D STL & Stock Media" },
+          { label: "Contact", value: "contact@kintsugi-indie.art" }
+        ]
+      },
+      apps: [
+        {
+          title: "My Mentor (Koçum Benim)",
+          badge: "Android App • Google Play",
+          description: "A minimalist daily motivation and personal focus companion designed to deliver calm, actionable reflections without cluttered distractions.",
+          meta: "Kotlin / Android",
+          linkLabel: "View Release",
+          linkUrl: "#"
+        },
+        {
+          title: "Atelier Utility Suite",
+          badge: "In Development",
+          description: "Lightweight productivity tools crafted for independent creators, focusing on offline reliability, clean typography, and zero bloat.",
+          meta: "Mobile & Web",
+          linkLabel: "Details",
+          linkUrl: "#"
+        }
+      ],
+      games: [
+        {
+          title: "Gem Crush — Match 3 & Blast",
+          badge: "Arcade Puzzle • Android",
+          description: "Fast-paced tactile gem matching with radiant gold particle feedback, combo cascades, and handcrafted stage progression.",
+          meta: "Google Play",
+          linkLabel: "Play Store",
+          linkUrl: "#"
+        },
+        {
+          title: "Vortex Drop",
+          badge: "Reflex Arcade • Android",
+          description: "Precision timing and gravity-driven descent through shifting geometric rings with an original atmospheric synth soundtrack.",
+          meta: "Godot Engine",
+          linkLabel: "Play Store",
+          linkUrl: "#"
+        },
+        {
+          title: "Blackjack 21 — Urushi Edition",
+          badge: "Card Classic • Android",
+          description: "A refined, distraction-free tabletop card experience styled in deep lacquer tones and crisp gold accents.",
+          meta: "Google Play",
+          linkLabel: "Play Store",
+          linkUrl: "#"
+        }
+      ],
+      music: {
+        artistNote: "Under the artist alias KİNTSUGİ, I compose and produce dark synthpop, retrowave, ethnic trap, breakcore, and Latin-electronic fusion distributed worldwide across Spotify, Apple Music, and digital stores.",
+        tracks: [
+          {
+            title: "AYKIRI (EP / Release)",
+            genre: "Turkish Alternative Electronic • Tekmele ve Kır, Müebbet, Sonsuza",
+            platform: "Spotify / Apple Music",
+            url: "#"
+          },
+          {
+            title: "Neon Scars",
+            genre: "Dark Retrowave / Synthwave Single",
+            platform: "Streaming Platforms",
+            url: "#"
+          },
+          {
+            title: "Infected Frequency",
+            genre: "23-Track Electronic & Rave Album",
+            platform: "All Digital Stores",
+            url: "#"
+          }
+        ]
+      },
+      digitalProducts: [
+        {
+          title: "Architectural Concrete Bonsai Planters (STL)",
+          badge: "3D Print Models • Cults3D",
+          description: "Printable 3D STL designs and silicone-mold master forms engineered for minimalist geometric and organic bonsai pots.",
+          meta: "Cults3D Storefront",
+          linkLabel: "Browse 3D Models",
+          linkUrl: "#"
+        },
+        {
+          title: "Botanical & Macro Photography",
+          badge: "Stock Media • Adobe Stock & Shutterstock",
+          description: "High-resolution editorial and commercial stock photography capturing Mediterranean flora, natural textures, and studio compositions.",
+          meta: "Licensed Assets",
+          linkLabel: "View Portfolio",
+          linkUrl: "#"
+        },
+        {
+          title: "Motion Loops & Ambient Visuals",
+          badge: "Digital Video Assets",
+          description: "Seamless abstract backgrounds, gold-leaf textures, and atmospheric loops tailored for musicians, streamers, and video editors.",
+          meta: "4K Digital Download",
+          linkLabel: "Explore Assets",
+          linkUrl: "#"
+        }
+      ],
+      privacy: {
+        lastUpdated: "November 2026",
+        sections: [
+          {
+            heading: "1. Overview & Data Philosophy",
+            body: "Kintsugi Indie ('we', 'our', or 'us'), operated by solo developer Semih Tekin, respects your privacy. Our applications, games, and web properties are built with minimal data collection in mind."
+          },
+          {
+            heading: "2. Information We Collect",
+            body: "Most Kintsugi Indie apps and games operate without requiring personal account registration. When third-party services such as Google Play Services, Google AdMob, or analytics providers are integrated into a specific mobile release, anonymous device identifiers, crash diagnostics, and basic interaction metrics may be processed strictly to maintain stability and deliver essential functionality."
+          },
+          {
+            heading: "3. Third-Party Storefronts & Platforms",
+            body: "Digital products, music releases, and mobile apps are distributed via trusted platforms including Google Play, Spotify, Apple Music, Cults3D, Adobe Stock, and Shutterstock. Any payment or account data handled on those platforms is governed by their respective privacy policies."
+          },
+          {
+            heading: "4. Contact & Inquiries",
+            body: "If you have questions regarding this Privacy Policy or any Kintsugi Indie application, you may reach out directly via contact@kintsugi-indie.art."
+          }
+        ]
+      }
+    };
+
+    let siteConfig = loadConfig();
+    let currentTab = "home";
+    let studioAuthenticated = false;
+    let activeStudioSection = "brand";
+
+    function loadConfig() {
+      try {
+        const raw = localStorage.getItem("kintsugi_atelier_config_v2");
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (parsed && parsed.brand && Array.isArray(parsed.tabs)) {
+            return Object.assign({}, DEFAULT_CONFIG, parsed);
+          }
+        }
+      } catch (e) {
+        localStorage.removeItem("kintsugi_atelier_config_v2");
+      }
+      return JSON.parse(JSON.stringify(DEFAULT_CONFIG));
+    }
+
+    function saveConfigToLocal() {
+      localStorage.setItem("kintsugi_atelier_config_v2", JSON.stringify(siteConfig));
+    }
+
+    function escapeHtml(str) {
+      if (str === undefined || str === null) return "";
+      return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
+    }
+
+    function renderAll() {
+      document.getElementById("ui-brand-name").textContent = siteConfig.brand.name;
+      document.getElementById("ui-brand-sub").textContent = siteConfig.brand.subtitle;
+      document.getElementById("ui-footer-copy").textContent = siteConfig.brand.footerNote;
+      renderNav();
+      renderMain();
+    }
+
+    function renderNav() {
+      const desktopNav = document.getElementById("desktop-nav");
+      const mobileDrawer = document.getElementById("mobile-drawer");
+      const visibleTabs = siteConfig.tabs.filter(t => t.visible);
+
+      const buttonsHtml = visibleTabs.map(tab =>
+        `<button class="nav-btn ${currentTab === tab.id ? 'active' : ''}" onclick="switchTab('${tab.id}')">${escapeHtml(tab.label)}</button>`
+      ).join("");
+
+      desktopNav.innerHTML = buttonsHtml;
+      mobileDrawer.innerHTML = buttonsHtml;
+    }
+
+    function toggleMobileMenu() {
+      document.getElementById("mobile-drawer").classList.toggle("open");
+    }
+
+    function switchTab(tabId) {
+      currentTab = tabId;
+      document.getElementById("mobile-drawer").classList.remove("open");
+      renderNav();
+      renderMain();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function renderMain() {
+      const main = document.getElementById("app-main");
+
+      if (currentTab === "home") {
+        main.innerHTML = `
+          <section>
+            <div class="hero">
+              <svg class="hero-crack-svg" viewBox="0 0 300 300" fill="none">
+                <path d="M290 10 L215 85 L235 135 L155 195 L170 255 L95 295" stroke="#d4af37" stroke-width="2" stroke-opacity="0.75"/>
+                <path d="M215 85 L145 65 L90 15" stroke="#f2d57e" stroke-width="1.3" stroke-opacity="0.6"/>
+                <path d="M155 195 L80 185 L25 225" stroke="#d4af37" stroke-width="1.2" stroke-opacity="0.5"/>
+              </svg>
+              <div class="hero-eyebrow">${escapeHtml(siteConfig.brand.heroEyebrow)}</div>
+              <h1><span class="gold-shimmer-text">${escapeHtml(siteConfig.brand.heroHeadline)}</span></h1>
+              <p>${escapeHtml(siteConfig.brand.heroDescription)}</p>
+              <div class="hero-actions">
+                <button class="btn-gold" onclick="switchTab('apps')">Explore Apps &amp; Games</button>
+                <button class="btn-outline" onclick="switchTab('music')">Listen to KİNTSUGİ</button>
+                <button class="btn-outline" onclick="switchTab('about')">About Semih Tekin</button>
+              </div>
+            </div>
+
+            <div class="section-head">
+              <h2>Atelier Disciplines</h2>
+              <p>Four interconnected creative pillars crafted independently with gold-seam precision.</p>
+            </div>
+
+            <div class="grid-cards">
+              <div class="card">
+                <div>
+                  <span class="card-badge">01 • Software</span>
+                  <h3>Apps &amp; Mobile Utilities</h3>
+                  <p>Focused, human-centered Android tools built for clarity, calm daily habits, and effortless usability.</p>
+                </div>
+                <div class="card-meta">
+                  <span>Android / Web</span>
+                  <button class="card-link" onclick="switchTab('apps')">View Apps →</button>
+                </div>
+              </div>
+
+              <div class="card">
+                <div>
+                  <span class="card-badge">02 • Interactive</span>
+                  <h3>Indie Arcade Games</h3>
+                  <p>Tactile mobile games blending responsive physics, atmospheric visuals, and original sound design.</p>
+                </div>
+                <div class="card-meta">
+                  <span>Google Play</span>
+                  <button class="card-link" onclick="switchTab('games')">View Games →</button>
+                </div>
+              </div>
+
+              <div class="card">
+                <div>
+                  <span class="card-badge">03 • Audio</span>
+                  <h3>Music Production</h3>
+                  <p>Dark synthpop, retrowave, ethnic trap, and experimental electronic releases under the alias KİNTSUGİ.</p>
+                </div>
+                <div class="card-meta">
+                  <span>Spotify &amp; Stores</span>
+                  <button class="card-link" onclick="switchTab('music')">Discography →</button>
+                </div>
+              </div>
+
+              <div class="card">
+                <div>
+                  <span class="card-badge">04 • Visual &amp; 3D</span>
+                  <h3>3D Models &amp; Stock Media</h3>
+                  <p>Sculptural STL planter designs on Cults3D alongside licensed photography and motion assets.</p>
+                </div>
+                <div class="card-meta">
+                  <span>Cults3D / Adobe Stock</span>
+                  <button class="card-link" onclick="switchTab('digital')">Storefronts →</button>
+                </div>
+              </div>
+            </div>
+          </section>
+        `;
+      } else if (currentTab === "about") {
+        main.innerHTML = `
+          <section>
+            <div class="section-head">
+              <h2>${escapeHtml(siteConfig.about.heading)}</h2>
+              <p>${escapeHtml(siteConfig.about.subheading)}</p>
+            </div>
+            <div class="about-grid">
+              <div class="bio-box">
+                ${siteConfig.about.paragraphs.map(p => `<p>${escapeHtml(p)}</p>`).join("")}
+              </div>
+              <div class="bio-box">
+                <ul class="fact-list">
+                  ${siteConfig.about.facts.map(f => `
+                    <li>
+                      <span class="fact-label">${escapeHtml(f.label)}</span>
+                      <span class="fact-value">${escapeHtml(f.value)}</span>
+                    </li>
+                  `).join("")}
+                </ul>
+              </div>
+            </div>
+          </section>
+        `;
+      } else if (currentTab === "apps") {
+        main.innerHTML = renderProjectGrid("Mobile & Web Applications", "Purpose-built software crafted with clean interfaces and practical utility.", siteConfig.apps);
+      } else if (currentTab === "games") {
+        main.innerHTML = renderProjectGrid("Indie Games", "Solo-developed arcade and casual experiences engineered for crisp feedback.", siteConfig.games);
+      } else if (currentTab === "music") {
+        main.innerHTML = `
+          <section>
+            <div class="section-head">
+              <h2>Music — KİNTSUGİ</h2>
+              <p>${escapeHtml(siteConfig.music.artistNote)}</p>
+            </div>
+            <div class="track-list">
+              ${siteConfig.music.tracks.map(t => `
+                <div class="track-item">
+                  <div class="track-info">
+                    <h4>${escapeHtml(t.title)}</h4>
+                    <span>${escapeHtml(t.genre)} • ${escapeHtml(t.platform)}</span>
+                  </div>
+                  <a class="btn-outline" style="text-decoration:none; padding: 0.55rem 1.1rem; font-size:0.82rem;" href="${escapeHtml(t.url)}" target="_blank" rel="noopener">Listen →</a>
+                </div>
+              `).join("")}
+            </div>
+          </section>
+        `;
+      } else if (currentTab === "digital") {
+        main.innerHTML = renderProjectGrid("Digital Products & Assets", "3D printable STL models, stock photography, and visual media available for licensing and download.", siteConfig.digitalProducts);
+      } else if (currentTab === "privacy") {
+        main.innerHTML = `
+          <section>
+            <div class="section-head">
+              <h2>Privacy Policy</h2>
+              <p>Last updated: ${escapeHtml(siteConfig.privacy.lastUpdated)}</p>
+            </div>
+            <div class="policy-box">
+              ${siteConfig.privacy.sections.map(s => `
+                <h3>${escapeHtml(s.heading)}</h3>
+                <p>${escapeHtml(s.body)}</p>
+              `).join("")}
+            </div>
+          </section>
+        `;
+      }
+    }
+
+    function renderProjectGrid(title, subtitle, items) {
+      return `
+        <section>
+          <div class="section-head">
+            <h2>${escapeHtml(title)}</h2>
+            <p>${escapeHtml(subtitle)}</p>
+          </div>
+          <div class="grid-cards">
+            ${items.map(item => `
+              <div class="card">
+                <div>
+                  <span class="card-badge">${escapeHtml(item.badge)}</span>
+                  <h3>${escapeHtml(item.title)}</h3>
+                  <p>${escapeHtml(item.description)}</p>
+                </div>
+                <div class="card-meta">
+                  <span>${escapeHtml(item.meta)}</span>
+                  <a class="card-link" href="${escapeHtml(item.linkUrl)}" target="_blank" rel="noopener">${escapeHtml(item.linkLabel)} →</a>
+                </div>
+              </div>
+            `).join("")}
+          </div>
+        </section>
+      `;
+    }
+
+    let sigClicks = 0;
+    let sigTimer = null;
+    document.getElementById("secret-trigger").addEventListener("click", () => {
+      sigClicks++;
+      clearTimeout(sigTimer);
+      sigTimer = setTimeout(() => { sigClicks = 0; }, 1800);
+      if (sigClicks >= 5) {
+        sigClicks = 0;
+        openStudio();
+      }
+    });
+
+    if (window.location.hash === "#atelier-studio") {
+      setTimeout(openStudio, 200);
+    }
+
+    function openStudio() {
+      document.getElementById("studio-backdrop").classList.add("open");
+      renderStudio();
+    }
+
+    function closeStudio() {
+      document.getElementById("studio-backdrop").classList.remove("open");
+      if (window.location.hash === "#atelier-studio") {
+        history.replaceState(null, "", window.location.pathname);
+      }
+    }
+
+    function renderStudio() {
+      const body = document.getElementById("studio-body");
+      if (!studioAuthenticated) {
+        body.innerHTML = `
+          <div class="studio-field">
+            <label>Owner Passcode</label>
+            <input type="password" id="studio-pass-input" placeholder="Enter passcode..." onkeydown="if(event.key==='Enter') verifyStudioPass()" />
+          </div>
+          <button class="btn-gold" onclick="verifyStudioPass()">Unlock Atelier Studio</button>
+          <div id="studio-pass-err" style="color:#e06c5f; font-size:0.84rem; margin-top:0.65rem;"></div>
+        `;
+        return;
+      }
+
+      const sections = [
+        { id: "brand", label: "Brand & Hero" },
+        { id: "tabs", label: "Menu Tabs" },
+        { id: "about", label: "About Bio" },
+        { id: "apps", label: "Apps" },
+        { id: "games", label: "Games" },
+        { id: "music", label: "Music" },
+        { id: "digital", label: "Digital Products" },
+        { id: "privacy", label: "Privacy Policy" },
+        { id: "export", label: "Publish / Export" }
+      ];
+
+      let editorHtml = `
+        <div class="studio-subtabs">
+          ${sections.map(s => `
+            <button class="studio-pill ${activeStudioSection === s.id ? 'active' : ''}" onclick="activeStudioSection='${s.id}'; renderStudio();">
+              ${s.label}
+            </button>
+          `).join("")}
+        </div>
+      `;
+
+      if (activeStudioSection === "brand") {
+        editorHtml += `
+          <div class="studio-row">
+            <div class="studio-field"><label>Brand Name</label><input value="${escapeHtml(siteConfig.brand.name)}" oninput="siteConfig.brand.name=this.value" /></div>
+            <div class="studio-field"><label>Subtitle</label><input value="${escapeHtml(siteConfig.brand.subtitle)}" oninput="siteConfig.brand.subtitle=this.value" /></div>
+          </div>
+          <div class="studio-field"><label>Hero Eyebrow</label><input value="${escapeHtml(siteConfig.brand.heroEyebrow)}" oninput="siteConfig.brand.heroEyebrow=this.value" /></div>
+          <div class="studio-field"><label>Hero Headline</label><input value="${escapeHtml(siteConfig.brand.heroHeadline)}" oninput="siteConfig.brand.heroHeadline=this.value" /></div>
+          <div class="studio-field"><label>Hero Description</label><textarea oninput="siteConfig.brand.heroDescription=this.value">${escapeHtml(siteConfig.brand.heroDescription)}</textarea></div>
+          <div class="studio-field"><label>Admin Passcode</label><input value="${escapeHtml(siteConfig.passcode)}" oninput="siteConfig.passcode=this.value" /></div>
+        `;
+      } else if (activeStudioSection === "tabs") {
+        editorHtml += siteConfig.tabs.map((t, i) => `
+          <div class="studio-item-card studio-row" style="align-items:center;">
+            <div class="studio-field" style="margin:0;"><label>Tab Label (${t.id})</label><input value="${escapeHtml(t.label)}" oninput="siteConfig.tabs[${i}].label=this.value" /></div>
+            <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer; color:var(--washi-text);">
+              <input type="checkbox" ${t.visible ? "checked" : ""} onchange="siteConfig.tabs[${i}].visible=this.checked" style="width:auto;" /> Show in Navigation Bar
+            </label>
+          </div>
+        `).join("");
+      } else if (activeStudioSection === "about") {
+        editorHtml += `
+          <div class="studio-field"><label>Heading</label><input value="${escapeHtml(siteConfig.about.heading)}" oninput="siteConfig.about.heading=this.value" /></div>
+          <div class="studio-field"><label>Biography Paragraphs (Separate with blank line)</label>
+            <textarea style="min-height:180px;" oninput="siteConfig.about.paragraphs=this.value.split('\\n\\n')">${escapeHtml(siteConfig.about.paragraphs.join("\n\n"))}</textarea>
+          </div>
+        `;
+      } else if (activeStudioSection === "apps" || activeStudioSection === "games" || activeStudioSection === "digital") {
+        const key = activeStudioSection === "digital" ? "digitalProducts" : activeStudioSection;
+        editorHtml += siteConfig[key].map((item, idx) => `
+          <div class="studio-item-card">
+            <div class="studio-row">
+              <div class="studio-field"><label>Title</label><input value="${escapeHtml(item.title)}" oninput="siteConfig['${key}'][${idx}].title=this.value" /></div>
+              <div class="studio-field"><label>Badge</label><input value="${escapeHtml(item.badge)}" oninput="siteConfig['${key}'][${idx}].badge=this.value" /></div>
+            </div>
+            <div class="studio-field"><label>Description</label><textarea style="min-height:70px;" oninput="siteConfig['${key}'][${idx}].description=this.value">${escapeHtml(item.description)}</textarea></div>
+            <div class="studio-row">
+              <div class="studio-field"><label>Tag / Platform</label><input value="${escapeHtml(item.meta)}" oninput="siteConfig['${key}'][${idx}].meta=this.value" /></div>
+              <div class="studio-field"><label>Link URL</label><input value="${escapeHtml(item.linkUrl)}" oninput="siteConfig['${key}'][${idx}].linkUrl=this.value" /></div>
+            </div>
+            <button class="btn-outline" style="padding:0.35rem 0.75rem; font-size:0.78rem; color:#e06c5f;" onclick="siteConfig['${key}'].splice(${idx},1); renderStudio();">Remove Item</button>
+          </div>
+        `).join("") + `
+          <button class="btn-outline" onclick="siteConfig['${key}'].push({title:'New Project',badge:'New',description:'Project description...',meta:'Kintsugi Indie',linkLabel:'View',linkUrl:'#'}); renderStudio();">+ Add New Item</button>
+        `;
+      } else if (activeStudioSection === "music") {
+        editorHtml += `
+          <div class="studio-field"><label>Artist Intro Note</label><textarea oninput="siteConfig.music.artistNote=this.value">${escapeHtml(siteConfig.music.artistNote)}</textarea></div>
+          ${siteConfig.music.tracks.map((tr, idx) => `
+            <div class="studio-item-card">
+              <div class="studio-row">
+                <div class="studio-field"><label>Release Title</label><input value="${escapeHtml(tr.title)}" oninput="siteConfig.music.tracks[${idx}].title=this.value" /></div>
+                <div class="studio-field"><label>Genre / Tracklist</label><input value="${escapeHtml(tr.genre)}" oninput="siteConfig.music.tracks[${idx}].genre=this.value" /></div>
+              </div>
+              <div class="studio-row">
+                <div class="studio-field"><label>Platform</label><input value="${escapeHtml(tr.platform)}" oninput="siteConfig.music.tracks[${idx}].platform=this.value" /></div>
+                <div class="studio-field"><label>Streaming Link</label><input value="${escapeHtml(tr.url)}" oninput="siteConfig.music.tracks[${idx}].url=this.value" /></div>
+              </div>
+              <button class="btn-outline" style="padding:0.35rem 0.75rem; font-size:0.78rem; color:#e06c5f;" onclick="siteConfig.music.tracks.splice(${idx},1); renderStudio();">Remove Track</button>
+            </div>
+          `).join("")}
+          <button class="btn-outline" onclick="siteConfig.music.tracks.push({title:'New Release',genre:'Electronic',platform:'Spotify',url:'#'}); renderStudio();">+ Add Release</button>
+        `;
+      } else if (activeStudioSection === "privacy") {
+        editorHtml += `
+          <div class="studio-field"><label>Last Updated</label><input value="${escapeHtml(siteConfig.privacy.lastUpdated)}" oninput="siteConfig.privacy.lastUpdated=this.value" /></div>
+          ${siteConfig.privacy.sections.map((sec, idx) => `
+            <div class="studio-item-card">
+              <div class="studio-field"><label>Clause Heading</label><input value="${escapeHtml(sec.heading)}" oninput="siteConfig.privacy.sections[${idx}].heading=this.value" /></div>
+              <div class="studio-field"><label>Clause Content</label><textarea oninput="siteConfig.privacy.sections[${idx}].body=this.value">${escapeHtml(sec.body)}</textarea></div>
+              <button class="btn-outline" style="padding:0.35rem 0.75rem; font-size:0.78rem; color:#e06c5f;" onclick="siteConfig.privacy.sections.splice(${idx},1); renderStudio();">Remove Clause</button>
+            </div>
+          `).join("")}
+          <button class="btn-outline" onclick="siteConfig.privacy.sections.push({heading:'New Section',body:'Policy details...'}); renderStudio();">+ Add Policy Clause</button>
+        `;
+      } else if (activeStudioSection === "export") {
+        editorHtml += `
+          <div class="studio-item-card">
+            <p style="color:var(--washi-muted); font-size:0.9rem; margin-bottom:1rem;">
+              1. Click <strong>Apply &amp; Preview</strong> to save changes in your browser.<br/>
+              2. Click <strong>Download Updated index.html</strong> and upload it to your GitHub repository to publish permanently.
+            </p>
+            <div style="display:flex; gap:0.75rem; flex-wrap:wrap;">
+              <button class="btn-gold" onclick="downloadUpdatedHtml()">Download Updated index.html</button>
+              <button class="btn-outline" onclick="resetToDefaults()">Reset to Default</button>
+            </div>
+          </div>
+        `;
+      }
+
+      editorHtml += `
+        <div style="margin-top:1.25rem; padding-top:1rem; border-top:1px solid var(--gold-border); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.75rem;">
+          <button class="btn-gold" onclick="saveConfigToLocal(); renderAll(); alert('Changes applied!');">Apply &amp; Preview</button>
+          <button class="btn-outline" onclick="downloadUpdatedHtml()">Download index.html for GitHub</button>
+        </div>
+      `;
+
+      body.innerHTML = editorHtml;
+    }
+
+    function verifyStudioPass() {
+      const val = document.getElementById("studio-pass-input").value;
+      if (val === siteConfig.passcode) {
+        studioAuthenticated = true;
+        renderStudio();
+      } else {
+        document.getElementById("studio-pass-err").textContent = "Incorrect passcode.";
+      }
+    }
+
+    function resetToDefaults() {
+      if (confirm("Reset all content back to initial defaults?")) {
+        localStorage.removeItem("kintsugi_atelier_config_v2");
+        siteConfig = JSON.parse(JSON.stringify(DEFAULT_CONFIG));
+        renderAll();
+        renderStudio();
+      }
+    }
+
+    function downloadUpdatedHtml() {
+      saveConfigToLocal();
+      const docClone = document.documentElement.cloneNode(true);
+      docClone.querySelector("#studio-backdrop").classList.remove("open");
+      docClone.querySelector("#studio-body").innerHTML = "";
+
+      const scriptEl = docClone.querySelector("#site-config-script");
+      scriptEl.textContent = scriptEl.textContent.replace(
+        /const DEFAULT_CONFIG = \{[\s\S]*?\n    \};/,
+        `const DEFAULT_CONFIG = ${JSON.stringify(siteConfig, null, 2)};`
+      );
+
+      const fullHtml = "<!DOCTYPE html>\n" + docClone.outerHTML;
+      const blob = new Blob([fullHtml], { type: "text/html;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "index.html";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    renderAll();
+  </script>
+</body>
+</html>
